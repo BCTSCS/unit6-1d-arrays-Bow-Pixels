@@ -26,6 +26,9 @@ public class DataAnalyzer{
 
         printArray(newNumbers);
 
+        FileOperator file = new FileOperator("capacities.txt");
+
+        printArray(file.toIntArray(30));
 
 
         
@@ -77,6 +80,37 @@ public class DataAnalyzer{
             newArray[i] = array[array.length-1-i];
         }
         return newArray;
+    }
+
+    public static int findMax(int[] values){
+        int max = values[0];
+        for(int i = 0; i < values.length; i++){
+            if(values[i] > max){
+                max = values[i];
+            }
+        }
+        return max;
+    }
+
+    public static int[] ascendOrDescend(int[] arr, int flip){
+        // if flip = 1, sorts in ascending order
+        // if flip = 0, sorts in descending order
+        int temp;
+        for(int i = 0; i < arr.length-1; i++){
+            for(int j = i+1; j< arr.length; j++){
+                if (arr[j] > arr[i]){
+                    temp = arr[j];
+                    arr[j] = arr[i];
+                    arr[i] = temp;
+                }
+            }
+        }
+        if(flip == 1){
+            return reverseList(arr);
+        }
+        else{
+            return arr;
+        }
     }
 
 }

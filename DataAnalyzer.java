@@ -27,6 +27,7 @@ public class DataAnalyzer{
         printArray(newNumbers);
 
         FileOperator file = new FileOperator("capacities.txt");
+        FileOperator arenas = new FileOperator("arenas.txt");
 
         printArray(file.toIntArray(30));
 
@@ -112,5 +113,30 @@ public class DataAnalyzer{
             return arr;
         }
     }
+    public static String[] findArenasByCapacity(FileOperator Arenas, FileOperator Capacities, boolean overUnder, int capacity){
+        String[] arenas = Arenas.toStringArray(30);
+        int[] capacities = Capacities.toIntArray(30);
+        String[] new_arenas = new String[capacities.length];
+        int j = 0;
+        if(overUnder){
+            for(int i = 0; i < capacities.length; i++){
+                if(capacities[i] > capacity){
+                    new_arenas[j] = arenas[i];
+                    j++;
+                }
+            }
+        }
+        else{
+            for(int i = 0; i < capacities.length; i++){
+                if(capacities[i] < capacity){
+                    new_arenas[j] = arenas[i];
+                    j++;
+                }
+            }
+        }
+        return new_arenas;
+        
+    }
+
 
 }

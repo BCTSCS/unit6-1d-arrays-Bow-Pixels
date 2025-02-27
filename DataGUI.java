@@ -46,7 +46,7 @@ public class DataGUI extends JFrame {
         minChampionshipsButton.addActionListener(e -> getMinChampionships());
     }
 
-    public static String stringify(String[] arr) {
+    private static String stringify(String[] arr) {
         String result = "";
         for(String s : arr) {
             result += s + "\n";

@@ -133,7 +133,7 @@ public class DataAnalyzer{
 
     public static String[] arenasWith(String[] list, String target, FileOperator file){
         int[] indices = findString(list ,target);
-        String[] arenaNames = file.toStringArray("data/names.txt", 30);
+        String[] arenaNames = file.toStringArray("data/arenas.txt", 30);
         String[] arenas = new String[indices.length];
         for(int i = 0; i< indices.length; i++){
             arenas[i] = arenaNames[indices[i]];

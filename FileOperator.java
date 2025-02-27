@@ -19,48 +19,54 @@ public class FileOperator {
         }
     }
 
-    public int[] toIntArray(int size){
+    public int[] toIntArray(String filepath, int size){
         int[] arr = new int[size];
+        this.setFile(filepath);
         for(int i = 0; i < size; i++){
             arr[i] = fileReader.nextInt();
         }
         return arr;
     }
 
-    public double[] toDoubleArray(int size){
+    public double[] toDoubleArray(String filepath, int size){
         double[] arr = new double[size];
+        this.setFile(filepath);
         for(int i = 0; i< size; i++){
             arr[i] = fileReader.nextDouble();
         }
         return arr;
     }
 
-    public String[] toStringArray(int size){
+    public String[] toStringArray(String filepath, int size){
         String[] arr = new String[size];
+        this.setFile(filepath);
         for(int i = 0; i < size; i++){
             arr[i] = fileReader.nextLine();
         }
         return arr;
     }
 
-    public ArrayList<String> toStringArray(){
+    public ArrayList<String> toStringArray(String filepath){
         ArrayList<String> arr = new ArrayList<String>();
+        this.setFile(filepath);
         while(fileReader.hasNextLine()){
             arr.add(fileReader.nextLine());
         }
         return arr;
     }
 
-    public ArrayList<Integer> toIntgArray(){
+    public ArrayList<Integer> toIntgArray(String filepath){
         ArrayList<Integer> arr = new ArrayList<Integer>();
+        this.setFile(filepath);
         while(fileReader.hasNextInt()){
             arr.add(fileReader.nextInt());
         }
         return arr;
     }
 
-    public ArrayList<Double> toDoubleArray(){
+    public ArrayList<Double> toDoubleArray(String filepath){
         ArrayList<Double> arr = new ArrayList<Double>();
+        this.setFile(filepath);
         while(fileReader.hasNextDouble()){
             arr.add(fileReader.nextDouble());
         }

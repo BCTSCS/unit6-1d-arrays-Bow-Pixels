@@ -1,5 +1,7 @@
 import java.io.File;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 public class DataAnalyzer{
 
 
@@ -26,10 +28,10 @@ public class DataAnalyzer{
 
         printArray(newNumbers);
 
-        FileOperator file = new FileOperator("capacities.txt");
-        FileOperator arenas = new FileOperator("arenas.txt");
+        FileOperator file = new FileOperator("arenas.txt");
 
-        printArray(file.toIntArray(30));
+        
+
 
 
         
@@ -113,30 +115,162 @@ public class DataAnalyzer{
             return arr;
         }
     }
-    public static String[] findArenasByCapacity(FileOperator Arenas, FileOperator Capacities, boolean overUnder, int capacity){
-        String[] arenas = Arenas.toStringArray(30);
-        int[] capacities = Capacities.toIntArray(30);
-        String[] new_arenas = new String[capacities.length];
-        int j = 0;
-        if(overUnder){
-            for(int i = 0; i < capacities.length; i++){
-                if(capacities[i] > capacity){
-                    new_arenas[j] = arenas[i];
-                    j++;
-                }
+   
+    public static int[] findString(String[] list, String target){
+        ArrayList<Integer> indices = new ArrayList<>();
+        for(int i = 0; i < list.length; i++){
+            if(list[i].equals(target)){
+                indices.add(i);
             }
+            
         }
-        else{
-            for(int i = 0; i < capacities.length; i++){
-                if(capacities[i] < capacity){
-                    new_arenas[j] = arenas[i];
-                    j++;
-                }
-            }
+        int[] result = new int[indices.size()];
+        for(int i = 0; i < indices.size(); i++){
+            result[i] = indices.get(i);
         }
-        return new_arenas;
+        return result;
+    }
+
+    public static String[] arenasWith(String[] list, String target, FileOperator file){
+        int[] indices = findString(list ,target);
+        String[] arenaNames = file.toStringArray("data/names.txt", 30);
+        String[] arenas = new String[indices.length];
+        for(int i = 0; i< indices.length; i++){
+            arenas[i] = arenaNames[indices[i]];
+        }
+        return arenas;
+    }
+
+    public static String[] arenasByTeam(String target, FileOperator file){
+        String filepath = "data/teams.txt";
+        int arr_size = 30;
+
+        String[] foundList = file.toStringArray(filepath,arr_size);
+        String[] arenas = arenasWith(foundList, target, file);
+        return arenas;
+
+    }
+
+    public static String[] arenasByLocation(String target, FileOperator file){
+        String filepath = "data/locations.txt";
+        int arr_size = 30;
+
+        String[] foundList = file.toStringArray(filepath,arr_size);
+        String[] arenas = arenasWith(foundList, target, file);
+        return arenas;
+
+    }
+
+    public static String[] arenasByCapacity(String target, FileOperator file){
+        String filepath = "data/capacities.txt";
+        int arr_size = 30;
+
+        String[] foundList = file.toStringArray(filepath,arr_size);
+        String[] arenas = arenasWith(foundList, target, file);
+        return arenas;
+
+    }
+    public static String[] arenasByChampionships(String target, FileOperator file){
+        String filepath = "data/championships.txt";
+        int arr_size = 30;
+
+        String[] foundList = file.toStringArray(filepath,arr_size);
+        String[] arenas = arenasWith(foundList, target, file);
+        return arenas;
+
+    }
+
+    public static String findMostCommonArena(FileOperator file) {
+       
+        ArrayList<String> locations = file.toStringArray("data/locations.txt");
+
+        List<String> locationList = new ArrayList<>();
+        List<Integer> countList = new ArrayList<>();
         
+        for (String location : locations) {
+            if (locationList.contains(location)) {
+                int index = locationList.indexOf(location);
+                countList.set(index, countList.get(index) + 1);
+            } else {
+                locationList.add(location);
+                countList.add(1);
+            }
+        }
+        
+        int maxIndex = 0;
+        for (int i = 1; i < countList.size(); i++) {
+            if (countList.get(i) > countList.get(maxIndex)) {
+                maxIndex = i;
+            }
+        }
+        
+        return locationList.get(maxIndex);
+    }
+
+    public static String largestArena(FileOperator file){
+        String[] arenas = file.toStringArray("data/arenas.txt", 30);
+        int[] capacities = file.toIntArray("data/capacities.txt",30);
+        int max_size = capacities[0];
+        String largest_arena = arenas[0];
+
+        for(int i = 0 ; i < arenas.length; i++){
+            if(capacities[i] > max_size){
+                max_size = capacities[i];
+                largest_arena = arenas[i];
+            }
+        }
+        return largest_arena;
+
+    }
+
+    public static String[] minChampionships(FileOperator file){
+        ArrayList<String> min_teams = new ArrayList<String>();
+        ArrayList<Integer> min_championships = new ArrayList<Integer>();
+        String[] arenas = file.toStringArray("data/teams.txt", 30);
+        int[] championships = file.toIntArray("data/championships.txt", 30);
+
+        min_teams.add(arenas[0]);
+        min_championships.add(championships[0]);
+
+        for(int i = 0; i < arenas.length; i++){
+            if(championships[i] < min_championships.get(0)){
+                min_teams.clear();
+                min_championships.clear();
+                min_teams.add(arenas[i]);
+                min_championships.add(championships[i]);
+            }
+            else if(championships[i] == min_championships.get(0)){
+                min_teams.add(arenas[i]);
+                min_championships.add(championships[i]);
+            }
+            
+        }
+        return min_teams.toArray(new String[0]);
+    }
+
+    public static int[] capacityByCity(String target, FileOperator file){
+        String[] arenas = file.toStringArray("data/arenas.txt", 30);
+        ArrayList<Integer> final_capacities = new ArrayList<>();
+        int[] capacities = file.toIntArray("data/capacities.txt", 30);
+
+        for (int i = 0; i < arenas.length; i++){
+            if(arenas[i].equals(target)){
+                final_capacities.add(capacities[i]);
+            }
+        }
+        int[] new_capacities = new int[final_capacities.size()];
+        
+        for(int i = 0; i < new_capacities.length; i++){
+            new_capacities[i] = final_capacities.get(i);
+        }
+        return new_capacities;
+
     }
 
 
+
+
+
+
 }
+

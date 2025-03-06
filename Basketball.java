@@ -2,37 +2,25 @@ import java.io.File;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
-public class DataAnalyzer{
+public class Basketball{
+    public ArrayList<Team> teams = new ArrayList<Team>();
 
 
     public static void main(String[] args){
-        int[] list = {10,20,30,40,50};
-        System.out.println(searchList(list, 40));
-        System.out.println(searchList(20, list));
-        int[] numbers = new int[100];
-        try {
-            File f = new File("numbers.txt");
-            
-            Scanner input = new Scanner(f);
-            for(int i = 0; i < 100; i++){
-                numbers[i] = input.nextInt();
-            }
-           
-            input.close();
-        } catch (Exception e) {
-            System.out.println("File not found");
+        Basketball org = new Basketball();
+        FileOperator file = new FileOperator("data/arenas.txt");
+        String[] arena_names = file.toStringArray("data/arenas.txt", 30);
+        String[] locations = file.toStringArray("data/locations.txt", 30);
+        String[] team_names = file.toStringArray("data/teams.txt", 30);
+        int[] capacities = file.toIntArray("data/capacities.txt", 30);
+        int[] championships = file.toIntArray("data/championships.txt", 30);
+        for(int i = 0; i < arena_names.length; i++){
+            org.teams.add(new Team(team_names[i], locations[i], arena_names[i], championships[i], capacities[i]));
         }
+        System.out.println(org.teams.get(0));
 
-        System.out.println(searchList(numbers, 17));
-        int[] newNumbers = reverseList(numbers);
-
-        printArray(newNumbers);
-
-        FileOperator file = new FileOperator("arenas.txt");
 
         
-
-
 
         
        

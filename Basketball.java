@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 public class Basketball{
-    private ArrayList<Team> teams = new ArrayList<Team>();
+    private static ArrayList<Team> teams = new ArrayList<Team>();
 
     public Basketball(){
         FileOperator file = new FileOperator("data/arenas.txt");

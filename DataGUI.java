@@ -9,7 +9,7 @@ public class DataGUI extends JFrame {
     private JTextField inputField;
     private JTextArea resultsArea;
     private FileOperator file = new FileOperator("data/arenas.txt");
-    private static Basketball ball = new Basketball();
+    private  static Basketball ball = new Basketball();
     public static int counter = 0;
     
     public DataGUI() {
